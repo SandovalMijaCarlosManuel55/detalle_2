@@ -163,10 +163,10 @@ function createLily() {
 function initLilies() {
     const count = window.innerWidth <= 768 ? 6 : 12;
     for (let i = 0; i < count; i++) {
-        setTimeout(createLily, i * 1200);
+        setTimeout(createLily, i * 500);
     }
 }
 
 function startLilyLoop() {
-    setInterval(createLily, 3000);
+    setInterval(createLily, 300);
 }
