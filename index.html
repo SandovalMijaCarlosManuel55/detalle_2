@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti N, desde mi corazon ♥</title>
+    <link rel="icon" href="img/corazon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="lily-container" id="lilyContainer"></div>
+
+    <div class="content">
+        <h1>Un mensaje especial</h1>
+        <p>Las flores adornan este espacio, pero hay algo más hermoso esperando por ti...</p>
+        <button class="book-button" onclick="openBook()">📖 Abrir Carta</button>
+    </div>
+
+    <div class="book-modal" id="bookModal">
+        <div class="book-container">
+            <button class="close-button" onclick="closeBook()">×</button>
+            <div class="book" id="book" onclick="toggleBook()">
+                <div class="book-spine"></div>
+
+                <div class="book-right">
+                    <div class="cloud-marquee">
+                        <div class="cloud-track" id="cloudTrack"></div>
+                    </div>
+
+                    <svg class="book-cover" style="overflow: visible;" viewBox="0 0 400 500">
+                        <defs>
+                            <pattern id="flowerPattern" x="0" y="0" width="100" height="100"
+                                patternUnits="userSpaceOnUse">
+                                <circle cx="50" cy="50" r="8" fill="#ffe0f0" opacity="0.6" />
+                                <circle cx="45" cy="48" r="5" fill="#ffc0e0" opacity="0.5" />
+                                <circle cx="55" cy="48" r="5" fill="#ffc0e0" opacity="0.5" />
+                            </pattern>
+                            <filter id="shadow">
+                                <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000"
+                                    flood-opacity="0.3" />
+                            </filter>
+                        </defs>
+
+                        <rect width="400" height="500" fill="url(#flowerPattern)" opacity="0.3" />
+
+                        <!-- Decoraciones florales en las esquinas -->
+                        <g filter="url(#shadow)">
+                            <circle cx="50" cy="40" r="12" fill="#ffc0e0" opacity="0.8" />
+                            <circle cx="45" cy="38" r="8" fill="#ffe0f0" opacity="0.9" />
+                            <circle cx="55" cy="38" r="8" fill="#ffe0f0" opacity="0.9" />
+                        </g>
+
+                        <g filter="url(#shadow)">
+                            <circle cx="350" cy="40" r="12" fill="#ffc0e0" opacity="0.8" />
+                            <circle cx="345" cy="38" r="8" fill="#ffe0f0" opacity="0.9" />
+                            <circle cx="355" cy="38" r="8" fill="#ffe0f0" opacity="0.9" />
+                        </g>
+
+                        <g filter="url(#shadow)">
+                            <circle cx="50" cy="460" r="12" fill="#ffc0e0" opacity="0.8" />
+                            <circle cx="45" cy="458" r="8" fill="#ffe0f0" opacity="0.9" />
+                            <circle cx="55" cy="458" r="8" fill="#ffe0f0" opacity="0.9" />
+                        </g>
+
+                        <g filter="url(#shadow)">
+                            <circle cx="350" cy="460" r="12" fill="#ffc0e0" opacity="0.8" />
+                            <circle cx="345" cy="458" r="8" fill="#ffe0f0" opacity="0.9" />
+                            <circle cx="355" cy="458" r="8" fill="#ffe0f0" opacity="0.9" />
+                        </g>
+
+                        <!-- Marco decorativo ajustado -->
+                        <rect x="30" y="30" width="340" height="440" fill="none" stroke="#ffe0f0" stroke-width="3"
+                            rx="5" opacity="0.6" />
+                        <rect x="35" y="35" width="330" height="430" fill="none" stroke="#ffffff" stroke-width="2"
+                            rx="5" opacity="0.4" />
+
+                        <foreignObject x="0" y="0" width="400" height="500">
+                            <div xmlns="http://www.w3.org/1999/xhtml"
+                                style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none;">
+                                <div class="cover-title">Carta de Amor</div>
+                                <div class="cover-subtitle">Para ti ♡</div>
+                            </div>
+                        </foreignObject>
+                    </svg>
+
+                    <div class="book-page" id="bookPage">
+                        <div class="letter-content">
+                            <h2>Mi amor ♡</h2>
+                            <p>
+                                Cada día a tu lado es un regalo que atesoro en mi corazón. Eres la razón por la que
+                                sonrío cuando despierto y el último pensamiento antes de dormir.
+                            </p>
+                            <p>
+                                Tu risa ilumina mis días más oscuros, y tu amor me da la fuerza para enfrentar cualquier
+                                desafío. Contigo he descubierto lo que significa amar de verdad, sin condiciones ni
+                                límites.
+                            </p>
+                            <p>
+                                Gracias por ser mi compañera, mi confidente, mi mejor amiga, mi amor,mi TODO♥. Gracias por elegirme cada
+                                día y por construir este hermoso camino juntos. Eres mi presente más preciado y mi
+                                futuro más anhelado.
+                            </p>
+                            <p>
+                                Que estas flores sean un pequeño recordatorio de que mi amor por ti florece eternamente,
+                                como los lirios que danzan en este jardín digital.
+                            </p>
+                            <div class="signature">Con todo mi amor,<br>Siempre tuyo ♡</div>
+                        </div>
+                        <svg class="scroll-indicator" id="scrollIndicator" viewBox="0 0 24 24" fill="none"
+                            stroke="#ff69b4" stroke-width="2">
+                            <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cod.js"></script>
+</body>
+
+</html>
