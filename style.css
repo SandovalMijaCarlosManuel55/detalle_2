@@ -21,11 +21,13 @@
             z-index: 1;
         }
 
-        .lily {
-            position: absolute;
-            opacity: 0;
-            animation: float 15s infinite ease-in-out;
-        }
+       .lily {
+    position: absolute;
+    opacity: 0;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
 
         .lily svg {
             filter: drop-shadow(0 4px 12px rgba(255, 105, 180, 0.3));
@@ -388,3 +390,29 @@
                 font-size: 12px;
             }
         }
+#lilyContainer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#lilyContainer svg {
+    max-width: 100%;
+    height: auto;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.1);
+        opacity: 0;
+    }
+}
