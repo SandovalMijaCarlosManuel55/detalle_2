@@ -1,152 +1,93 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Dibujador SVG Optimizado</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fondo de Estrellas Titilantes</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #760000;
+    }
+
+    .starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .star {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      top: var(--y);
+    }
+
+    .star::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(#fffacd 10%, rgba(255, 250, 205, 0.2));
+      clip-path: polygon(50% 0%, 53.53553% 41.46447%, 85.35534% 14.64466%, 58.53553% 46.46447%, 100% 50%, 58.53553% 53.53553%, 85.35534% 85.35534%, 53.53553% 58.53553%, 50% 100%, 46.46447% 58.53553%, 14.64466% 85.35534%, 41.46447% 53.53553%, 0% 50%, 41.46447% 46.46447%, 14.64466% 14.64466%, 46.46447% 41.46447%);
+      opacity: var(--opacity);
+      animation: 
+        twinkle var(--duration) ease-in-out var(--delay) infinite alternate,
+        hue var(--hue-duration) linear var(--delay) infinite;
+    }
+
+    @keyframes twinkle {
+      0% {
+        transform: scale(1);
+        opacity: var(--opacity);
+      }
+      100% {
+        transform: scale(0.3);
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes hue {
+      to {
+        filter: hue-rotate(360deg);
+      }
+    }
+  </style>
 </head>
+<body>
+  <div class="starfield" id="starfield"></div>
 
-<body style="margin:0;padding:20px;font-family:Arial;background:#0b0f1a">
+  <script>
+    const starfield = document.getElementById('starfield');
+    const numStars = 150;
 
-    <div style="max-width:900px;margin:0 auto">
-        <h1 style="color:#ff2e2e">Dibujador SVG – Trazado fino</h1>
-
-        <div style="background:#111827;border-radius:10px;padding:20px;margin:10px 0;color:white">
-
-            <!-- BOTONES -->
-            <button id="playBtn"
-                style="padding:10px 20px;border:none;border-radius:5px;cursor:pointer;color:white;background:#ff2e2e;margin:5px">
-                Dibujar
-            </button>
-
-            <button id="resetBtn"
-                style="padding:10px 20px;border:none;border-radius:5px;cursor:pointer;color:white;background:#6c757d;margin:5px">
-                Reiniciar
-            </button>
-
-            <!-- TIEMPO FIJO -->
-            <p style="margin-top:10px;color:#ff2e2e;">
-                ⏱ Duración fija: <strong>60 segundos</strong>
-            </p>
-
-            <!-- BARRA DE PROGRESO -->
-            <div style="background:#333;border-radius:5px;margin:20px 0;height:10px">
-                <div id="prog" style="height:10px;background:#ff2e2e;width:0"></div>
-            </div>
-
-            <!-- ÁREA PARA PEGAR TU SVG -->
-            <h3 style="color:#ff2e2e">Pega tu SVG aquí:</h3>
-            <textarea id="svgInput"
-                style="width:100%;height:180px;font-family:monospace;font-size:14px;background:#0b0f1a;color:#ff2e2e;border:1px solid #ff2e2e;border-radius:5px"></textarea>
-
-            <button id="loadSvgBtn"
-                style="margin-top:10px;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;background:#00c851;color:white">
-                Cargar SVG
-            </button>
-
-            <!-- CONTENEDOR -->
-            <div style="background:#000;padding:40px;text-align:center;border-radius:10px;margin-top:20px">
-                <div id="svgContainer"></div>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        let playing = false, startTime = 0, anim = 0;
-        let paths = [];
-        const FIXED_DURATION = 60000; // ✔ 60 segundos
-
-        document.getElementById("loadSvgBtn").onclick = function () {
-            const svgCode = document.getElementById("svgInput").value.trim();
-            const container = document.getElementById("svgContainer");
-
-            container.innerHTML = svgCode;
-
-            const svg = container.querySelector("svg");
-            if (!svg) {
-                alert("❌ No se encontró un SVG válido.");
-                return;
-            }
-
-            svg.style.maxWidth = "450px";
-            svg.style.maxHeight = "450px";
-
-            paths = Array.from(svg.querySelectorAll("path"));
-            if (paths.length === 0) return alert("❌ El SVG no contiene <path>.");
-
-            paths.forEach(p => {
-                const len = p.getTotalLength();
-
-                // ✔ Trazo más fino
-                p.style.stroke = "#ff2e2e";
-                p.style.fill = "none";
-                p.style.strokeWidth = 4;      // ✔ trazo fino
-                p.style.strokeLinecap = "round";
-                p.style.strokeLinejoin = "round";
-
-                // ✔ Glow más suave que no engorda el trazo
-                p.style.filter = "drop-shadow(0 0 4px #ff3333) drop-shadow(0 0 8px #ff0000)";
-
-                p.style.shapeRendering = "geometricPrecision";
-                p.style.vectorEffect = "non-scaling-stroke";
-
-                p.style.strokeDasharray = len;
-                p.style.strokeDashoffset = len;
-                p._len = len;
-            });
-
-            document.getElementById("prog").style.width = "0";
-            document.getElementById("playBtn").innerHTML = "Dibujar";
-        };
-
-        document.getElementById('playBtn').onclick = function () {
-            if (!paths.length) return alert("Primero carga un SVG.");
-
-            if (playing) {
-                playing = false;
-                cancelAnimationFrame(anim);
-                this.innerHTML = 'Continuar';
-            } else {
-                playing = true;
-                this.innerHTML = 'Pausar';
-                if (!startTime) startTime = performance.now();
-                animate();
-            }
-        };
-
-        document.getElementById('resetBtn').onclick = function () {
-            playing = false;
-            startTime = 0;
-            cancelAnimationFrame(anim);
-
-            paths.forEach(p => p.style.strokeDashoffset = p._len);
-            document.getElementById("prog").style.width = "0";
-            document.getElementById("playBtn").innerHTML = "Dibujar";
-        };
-
-        function animate() {
-            if (!playing) return;
-
-            const elapsed = performance.now() - startTime;
-            const progress = Math.min(elapsed / FIXED_DURATION, 1);
-
-            paths.forEach(p => {
-                p.style.strokeDashoffset = p._len * (1 - progress);
-            });
-
-            document.getElementById("prog").style.width = (progress * 100) + "%";
-
-            if (progress < 1) {
-                anim = requestAnimationFrame(animate);
-            } else {
-                playing = false;
-                startTime = 0;
-                document.getElementById("playBtn").innerHTML = "Dibujar";
-            }
-        }
-    </script>
-
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      const size = Math.random() * 20 + 10;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const opacity = Math.random() * 0.5 + 0.5;
+      const duration = Math.random() * 2 + 1;
+      const hueDuration = Math.random() * 6 + 4;
+      const delay = Math.random() * 3;
+      
+      star.style.setProperty('--size', `${size}px`);
+      star.style.setProperty('--x', `${x}%`);
+      star.style.setProperty('--y', `${y}%`);
+      star.style.setProperty('--opacity', opacity);
+      star.style.setProperty('--duration', `${duration}s`);
+      star.style.setProperty('--hue-duration', `${hueDuration}s`);
+      star.style.setProperty('--delay', `${delay}s`);
+      
+      starfield.appendChild(star);
+    }
+  </script>
 </body>
-
 </html>
