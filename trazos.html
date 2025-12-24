@@ -156,6 +156,7 @@
             opacity: 0;
             animation: giftAppear 0.8s ease-out forwards;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            z-index: 2;
         }
         /* Contenedor de la caja */
         .gift-body {
@@ -341,6 +342,7 @@
         .gift-box {
             animation: giftAppear 0.8s ease-out forwards,
                        giftGlow 3s ease-in-out infinite;
+                       z-index: 5;
         }
 
         @keyframes giftGlow {
@@ -498,7 +500,7 @@
             
             bottom: 20px;
             left: 50%;
-padding-top: 100px;
+margin-top: 100px;
             display: flex;
             gap: 12px;
             z-index: 100;
@@ -719,6 +721,9 @@ padding-top: 100px;
                 </div>
 
 
+                </div>
+                
+
                 <div class="gift-bo gift-10"
      data-image="img/felizNavidad.jpg"
      style="bottom: 8%; left: 45%;">
@@ -738,8 +743,6 @@ padding-top: 100px;
     <div class="gift-image-modal" id="gift-image-modal"></div>
 
 </div>
-
-                </div>
             </div>
         </div>
 
